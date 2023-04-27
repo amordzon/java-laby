@@ -16,7 +16,7 @@ public class Spotkanie {
 
     public Spotkanie(String opis, LocalTime poczatek, LocalTime koniec, Priorytet priorytet) throws Exception{
         if(poczatek.isBefore(NAJWCZESNIEJ)) {
-            throw new Exception("nie mozna tak wczesnie");
+            throw new Exception("Nie mozna tak wczesnie");
         }
         this.opis=opis;
         this.poczatek=poczatek;
