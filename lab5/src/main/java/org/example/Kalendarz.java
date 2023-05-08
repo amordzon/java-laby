@@ -2,6 +2,7 @@ package org.example;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class Kalendarz {
     private ArrayList<ArrayList<Spotkanie>> dni = new ArrayList<ArrayList<Spotkanie>>();
@@ -25,19 +26,14 @@ public class Kalendarz {
         dni.get(nrDnia).remove(spotkanieDoUsuniecia);
     }
 
-    public ArrayList<Spotkanie> getSpotkaniaDnia(Integer nrDnia) {
-        ArrayList<Spotkanie> spotkaniaDnia=dni.get(nrDnia);
-        return spotkaniaDnia;
-    }
-
-    public ArrayList<Spotkanie> getSpotkaniaDniaPriorytet(Integer nrDnia, Priorytet priorytet) {
-        ArrayList<Spotkanie> spotkaniaDnia=dni.get(nrDnia);
-        ArrayList<Spotkanie> spotkanieDniaPriorytet= new ArrayList<>();
-        for(int i = 0; i<spotkaniaDnia.size(); i++){
-            if(spotkaniaDnia.get(i).getPriorytet()==priorytet) {
-                spotkanieDniaPriorytet.add(spotkaniaDnia.get(i));
+    public ArrayList<Spotkanie> getSpotkania(Integer dzien, Predicate<Spotkanie> warunek){
+        ArrayList<Spotkanie> spotkaniaDnia=dni.get(dzien);
+        ArrayList<Spotkanie> spotkaniaFiltrowane = new ArrayList<Spotkanie>();
+        for (Spotkanie spotkanie : spotkaniaDnia) {
+            if (warunek.test(spotkanie)) {
+                spotkaniaFiltrowane.add(spotkanie);
             }
         }
-        return spotkanieDniaPriorytet;
+        return spotkaniaFiltrowane;
     }
 }
