@@ -5,35 +5,40 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class Kalendarz {
-    private ArrayList<ArrayList<Spotkanie>> dni = new ArrayList<ArrayList<Spotkanie>>();
+    private ArrayList<ArrayList<Wpis>> dni = new ArrayList<ArrayList<Wpis>>();
     public Kalendarz() {
         this(7);
     }
 
     public Kalendarz(Integer liczbaDni) {
         while (this.dni.size() < liczbaDni) {
-            this.dni.add(new ArrayList<Spotkanie>());
+            this.dni.add(new ArrayList<Wpis>());
         }
     }
 
-    public void addSpotkanie(Integer nrDnia, String opis, LocalTime poczatek, LocalTime koniec, Priorytet priorytet) throws Exception {
+    public void add(Integer nrDnia, String opis, LocalTime poczatek, LocalTime koniec, Priorytet priorytet) throws Exception {
         Spotkanie spotkanie = new Spotkanie(opis, poczatek, koniec, priorytet);
         dni.get(nrDnia).add(spotkanie);
     }
 
-    public void removeSpotkanie(Integer nrDnia, Integer index){
-        Spotkanie spotkanieDoUsuniecia=dni.get(nrDnia).get(index);
-        dni.get(nrDnia).remove(spotkanieDoUsuniecia);
+    public void add(Integer nrDnia, String opis, LocalTime poczatek, LocalTime koniec, Status status) throws Exception {
+        Zadanie zadanie = new Zadanie(opis, poczatek, koniec, status);
+        dni.get(nrDnia).add(zadanie);
     }
 
-    public ArrayList<Spotkanie> getSpotkania(Integer dzien, Predicate<Spotkanie> warunek){
-        ArrayList<Spotkanie> spotkaniaDnia=dni.get(dzien);
-        ArrayList<Spotkanie> spotkaniaFiltrowane = new ArrayList<Spotkanie>();
-        for (Spotkanie spotkanie : spotkaniaDnia) {
-            if (warunek.test(spotkanie)) {
-                spotkaniaFiltrowane.add(spotkanie);
+    public void remove(Integer nrDnia, Wpis wpisDoUsuniecia){
+//        Wpis wpisDoUsuniecia=dni.get(nrDnia).get(index);
+        dni.get(nrDnia).remove(wpisDoUsuniecia);
+    }
+
+    public ArrayList<Wpis> getWpisy(Integer dzien, Predicate<Wpis> warunek){
+        ArrayList<Wpis> wpisDnia=dni.get(dzien);
+        ArrayList<Wpis> wpisFiltrowane = new ArrayList<Wpis>();
+        for (Wpis wpis : wpisDnia) {
+            if(warunek.test(wpis)){
+                wpisFiltrowane.add(wpis);
             }
         }
-        return spotkaniaFiltrowane;
+        return wpisFiltrowane;
     }
 }

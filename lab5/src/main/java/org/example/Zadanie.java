@@ -9,8 +9,9 @@ public final class Zadanie extends Wpis{
 
     }
 
-    public Zadanie(String opis, LocalTime poczatek, LocalTime koniec) throws Exception{
+    public Zadanie(String opis, LocalTime poczatek, LocalTime koniec, Status status) throws Exception{
         super(opis, poczatek, koniec);
+        this.status=status;
     }
 
     public Status getStatus(){
